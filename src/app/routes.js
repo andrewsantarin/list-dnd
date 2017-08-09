@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from './App';
-import Lists from './lists/Lists';
+import Lists from '../lists/Lists';
 
 export const urls = {
   index: '/',

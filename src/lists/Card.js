@@ -18,7 +18,7 @@ const cardSource = {
 
   endDrag(props, monitor) {
     document.getElementById(monitor.getItem().id).style.display = 'block';
-    props.stopScrolling();
+    // props.stopScrolling();
   },
 
   isDragging(props, monitor) {
@@ -67,7 +67,7 @@ export default class Card extends Component {
 
     return dragSource(
       <div>
-        <CardTemplate item={item} />
+        <CardTemplate item={item} style={{ border: '1px solid', padding: '10px 15px', backgroundColor: '#eee' }} />
       </div>
     );
   }

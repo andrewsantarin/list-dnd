@@ -41,7 +41,7 @@ export default class CustomDragLayer extends Component {
     switch (itemType) {
       case itemTypes.CARD:
         return (
-          <CardDragPreview card={item} />
+          <CardDragPreview card={item} style={{ border: '1px solid' }} />
         );
       case itemTypes.LIST:
       default:

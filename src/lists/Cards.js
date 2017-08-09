@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { DropTarget } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
 
 import itemTypes from './itemTypes';
 import Card from './Card';
 
-const CARD_HEIGHT = 161;  // height of a single card(excluding marginBottom/paddingBottom)
-const CARD_MARGIN = 10;  // height of a marginBottom+paddingBottom
-const OFFSET_HEIGHT = 84; // height offset from the top of the page
+const CARD_HEIGHT = 18;  // height of a single card(excluding marginBottom/paddingBottom)
+const CARD_MARGIN = 23;  // height of a marginBottom+paddingBottom
+const OFFSET_HEIGHT = 40; // height offset from the top of the page
 
+// Won't work. See TODO below.
 function getPlaceholderIndex(y, scrollY) {
   // shift placeholder if y position more than card height / 2
   const yPos = y - OFFSET_HEIGHT + scrollY;
@@ -18,6 +20,7 @@ function getPlaceholderIndex(y, scrollY) {
   } else {
     placeholderIndex = Math.floor((yPos - CARD_HEIGHT / 2) / (CARD_HEIGHT + CARD_MARGIN));
   }
+  console.log(placeholderIndex);
   return placeholderIndex;
 }
 
@@ -43,12 +46,23 @@ const cardTarget = {
     props.moveCard(lastX, lastY, nextX, nextY);
   },
   hover(props, monitor, component) {
+    console.log(monitor.getItem());
+    /**
+     * NO, NO, NO!
+     * For this use case, this algorithm won't work!
+     * It assumes that the card is belongs to a list column that fills the entire vertical space of the screen.
+     * Which isn't true here. Here, a "list" only takes up part of that vertical space, so the vertical space can have multiple lists.
+     *
+     * TODO
+     * Change this bloody formula!
+     */
     // defines where placeholder is rendered
     const placeholderIndex = getPlaceholderIndex(
       monitor.getClientOffset().y,
       findDOMNode(component).scrollTop
     );
 
+    /*
     // horizontal scroll
     if (!props.isScrolling) {
       if (window.innerWidth - monitor.getClientOffset().x < 200) {
@@ -63,6 +77,7 @@ const cardTarget = {
         props.stopScrolling();
       }
     }
+    */
 
     // IMPORTANT!
     // HACK! Since there is an open bug in react-dnd, making it impossible
@@ -85,7 +100,7 @@ const collector = (connect, monitor) => ({
   item: monitor.getItem()
 });
 
-const PlaceholderCard = () => <div key="placeholder" className="item placeholder" />;
+const PlaceholderCard = () => <div key="placeholder" className="item placeholder" style={{ height: '1em', padding: '12px 17px', backgroundColor: '#aaa' }} />;
 
 @DropTarget(itemTypes.CARD, cardTarget, collector)
 export default class extends Component {
@@ -147,7 +162,7 @@ export default class extends Component {
     }
 
     return dropTarget(
-      <div className="list-items">
+      <div className="list-items" style={{ padding: '15px' }}>
         {cardsList}
       </div>
     );

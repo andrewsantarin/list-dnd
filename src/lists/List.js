@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 
 import Cards from './Cards';
@@ -14,7 +15,7 @@ export default class List extends Component {
     const { list, x, moveCard } = this.props;
 
     return (
-      <div className="list">
+      <div className="list" style={{ margin: '15px 0' }}>
         <div className="list-header">
           <div className="list-name">{list.name}</div>
         </div>

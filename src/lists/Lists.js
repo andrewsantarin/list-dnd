@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import DragDropContext from './DragDropContext';
+import DragDropContext from '../app/DragDropContext';
 
-import * as listsActions from './listsActions';
+import * as listsActions from './actions';
 
 import List from './List';
 import CustomDragLayer from './CustomDragLayer';
@@ -32,15 +32,15 @@ export default class Lists extends Component {
     this.props.moveCard(lastX, lastY, nextX, nextY)
 
   render() {
-    const { lists } = props;
+    const { lists } = this.props;
 
     return (
-      <div style={{ height: '100%' }}>
+      <div style={{ height: '100%', width: '50%' }}>
         <CustomDragLayer />
         {lists.map((list, i) =>
           <List
-            key={item.id}
-            id={item.id}
+            key={list.id}
+            id={list.id}
             list={list}
             moveCard={this.moveCard}
             x={i}

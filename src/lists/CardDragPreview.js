@@ -4,24 +4,25 @@ import CardTemplate from './CardTemplate';
 
 const TILT = 'rotate(-7deg)';
 const STYLES = {
-  display: 'inline-block',
-  transform: TILT,
-  WebkitTransform: TILT
+  display: 'inline-block'
 };
 
-const MIN_DIMENSIONS = 243;
-const setDimension = (dimension) => `${dimension || MIN_DIMENSIONS}px`;
+const MIN_DIMENSIONS = {
+  x: 243,
+  y: 40
+};
+const setDimension = (dimension, minDimension) => `${dimension || minDimension}px`;
 
 const propTypes = {
   card: PropTypes.object
 };
 
 const CardDragPreview = (props) => {
-  styles.width = setDimension(props.card.clientWidth);
-  styles.height = setDimension(props.card.clientHeight);
+  STYLES.width = setDimension(props.card.clientWidth, MIN_DIMENSIONS.x);
+  STYLES.height = setDimension(props.card.clientHeight, MIN_DIMENSIONS.y);
 
   return (
-    <div style={styles}>
+    <div style={STYLES}>
       <CardTemplate item={props.card.item} />
     </div>
   );

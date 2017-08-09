@@ -3,7 +3,7 @@ import {
   routerReducer
 } from 'react-router-redux';
 
-import lists from './lists/reducer';
+import lists from '../lists/reducer';
 
 const reducer = combineReducers({
   routing: routerReducer,
